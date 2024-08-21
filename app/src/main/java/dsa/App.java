@@ -10,15 +10,8 @@ public class App {
 
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
-        list.insert(20);
-        list.insert(50);
-        list.insert(100);
-        list.insert(60);
-        System.out.println(list);
-        list.unshift(99);
-        System.out.println(list);
+        list.unshift(20);
         list.shift();
         System.out.println(list);
-        
     }
 }

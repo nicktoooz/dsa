@@ -1,11 +1,10 @@
 package dsa.utils.LinkedList;
 
 public class LinkedList {
-    Node head;
+    private Node head;
 
-    public void insert(int data){
-        Node node = new Node();
-        node.data = data;
+    public void insert(int data) {
+        Node node = new Node(data);
 
         if (head == null) {
             head = node;
@@ -17,45 +16,76 @@ public class LinkedList {
             n.next = node;
         }
     }
-    
-    public void insertAt(int index, int data){
-        int counter = 0;
-        Node node = new Node();
-        node.data = data;
 
-        if (head != null) {
+    public void insert(int index, int data) {
+        Node node = new Node(data);
+
+        if (index == 0) {
+            node.next = head;
             head = node;
-        } else {
-            Node n = new Node();
+            return;
         }
+
+        Node n = head;
+        for (int i = 0; i < index - 1; i++) {
+            if (n == null) {
+                throw new IndexOutOfBoundsException("Index out of bounds");
+            }
+            n = n.next;
+        }
+        if (n == null) {
+            throw new IndexOutOfBoundsException("Index out of bounds");
+        }
+        node.next = n.next;
+        n.next = node;
     }
 
-    public void unshift(int data){
-        Node node = new Node();
-        node.data = data;
+    public void unshift(int data) {
+        Node node = new Node(data);
         node.next = head;
         head = node;
     }
-    public void shift(){
+
+    public void shift() {
+        if (head == null || head.next == null) {
+            head = null;
+            return;
+        }
+
         Node n = head;
         while (n.next.next != null) {
             n = n.next;
         }
         n.next = null;
     }
-    
-    
-  
+
     @Override
-    public String toString(){
-        StringBuilder str = new StringBuilder();
+    public String toString() {
+        if (head == null) {
+            return "[ ]";
+        }
+
+        StringBuilder str = new StringBuilder("[");
         Node n = head;
-        str.append("[");
-        while (n.next != null) {
-            str.append(n.data).append(", ");
+        while (n != null) {
+            str.append(n.data);
+            if (n.next != null) {
+                str.append(", ");
+            }
             n = n.next;
         }
-        str.append(n.data).append("]");
+        str.append("]");
         return str.toString();
+    }
+
+    private static class Node {
+        int data;
+        Node next;
+
+        Node() {}
+
+        Node(int data) {
+            this.data = data;
+        }
     }
 }
